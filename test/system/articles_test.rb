@@ -1,6 +1,23 @@
 require "application_system_test_case"
 
 class ArticlesTest < ApplicationSystemTestCase
+  def setup
+    @driver = Selenium::WebDriver.for :remote, url: "https://selenium-grid.lib.utexas.edu/wd/hub", desired_capabilities: :firefox
+  end
+
+  def teardown
+    @driver.quit
+  end
+
+  test "visit google" do
+    @driver.navigate.to "http://google.com"
+    element = @driver.find_element(name: 'q')
+    element.send_keys "Hello WebDriver!"
+    element.submit
+
+    assert true
+  end
+
   test "visiting the index" do
     visit articles_url
 
